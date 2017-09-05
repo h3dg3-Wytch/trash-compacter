@@ -1,6 +1,7 @@
 package kibo;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -11,10 +12,15 @@ public class App
 {
     public static void main( String[] args )
     {
-        if(args.length < 2){
+        if(args.length < 1){
             System.out.println("Please provide arguments!");
+            return;
         }
 
+        for(String fileName : args){
+            Zip.zipFile(fileName, ".");
+            Zip.unzipFile(fileName+".zip");
+        }
 
     }
 

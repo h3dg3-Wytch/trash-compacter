@@ -7,7 +7,6 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
-
     private static final byte[] BUFFER = new byte[1024];
 
     public static String fileSize(String fileName){
@@ -19,7 +18,7 @@ public class Zip {
 
         System.out.println("Size of zipped file : " + fileSize(fileName));
 
-        System.out.println("Starting compression of file...");
+        System.out.println("Starting decompression of " + fileName + "...");
         long startTime = System.currentTimeMillis();
 
         try{
@@ -51,7 +50,7 @@ public class Zip {
         long endTime = System.currentTimeMillis();
         long totalTime = (endTime - startTime) /1000;
 
-        System.out.println("Compressed, took " + totalTime + " seconds.");
+        System.out.println("Decompressed, took " + totalTime + " seconds.");
     }
 
 
@@ -59,7 +58,7 @@ public class Zip {
 
         System.out.println("Size of zipped file : " + fileSize(fileName));
 
-        System.out.println("Starting compression of file...");
+        System.out.println("Starting compression of " + fileName +"...");
         long startTime = System.currentTimeMillis();
 
         FileOutputStream destination = null;
@@ -67,7 +66,7 @@ public class Zip {
         FileInputStream origin = null;
 
         try{
-            destination = new FileOutputStream("example.zip");
+            destination = new FileOutputStream(fileName+".zip");
             zipOutputStream = new ZipOutputStream(new BufferedOutputStream(destination));
             ZipEntry zipEntry = new ZipEntry(fileName);
             zipOutputStream.putNextEntry(zipEntry);
@@ -88,7 +87,7 @@ public class Zip {
         }
 
         long endTime = System.currentTimeMillis();
-        long totalTime = (endTime - startTime) / 100;
+        long totalTime = (endTime - startTime) / 1000;
 
         System.out.println("Compressed, took " + totalTime + " seconds.");}
 

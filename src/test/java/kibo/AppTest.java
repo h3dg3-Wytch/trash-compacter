@@ -35,5 +35,11 @@ public class AppTest extends TestCase{
         assertTrue( true );
     }
 
+    @org.junit.Test
+    public void testParameters(){
+        String[] params = {"example.txt"};
+        App.main(params);
+
+    }
 
 }
