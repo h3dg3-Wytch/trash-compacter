@@ -18,10 +18,6 @@ public class App
 
     }
 
-    public static void fileSize(String fileName){
-        File file = new File(fileName);
-        System.out.println(file.length()+ " bytes");
-    }
 
 
 }
