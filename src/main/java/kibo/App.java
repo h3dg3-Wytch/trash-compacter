@@ -38,8 +38,8 @@ public class App
 
     public static void zipAndUnZipFile(File targetFile){
         Zip.zipFile(targetFile);
-
         String cleanPath = PathOrganizer.cleanPath(targetFile.toString()) + ".zip";
+        Zip.unzipFile(new File(cleanPath));
     }
 
 

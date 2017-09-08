@@ -17,7 +17,7 @@ public class Zip {
     }
 
     public static void unzipFile(File file){
-
+        System.out.println("---------------------------------");
         System.out.println("Size of unzipped file : " + Zip.fileSize(file.toString()));
         System.out.println("Starting decompression of " + file.toString() + "...");
         long startTime = System.currentTimeMillis();
@@ -45,7 +45,7 @@ public class Zip {
                 destination.close();
             }
         }catch(Exception e){
-            System.out.println("Error, something happened!");
+            System.out.println("ERROR: something happened!");
         }
 
         long endTime = System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class Zip {
 
 
     public static void zipFile(File file){
-
+        System.out.println("---------------------------------");
         System.out.println("Size of zipped file : " + Zip.fileSize(file.toString()));
         System.out.println("Starting compression of " + file.toString() + "...");
 
@@ -81,7 +81,7 @@ public class Zip {
             zos.close();
 
         }catch(IOException ex){
-            ex.printStackTrace();
+            System.out.println("ERROR: Please enter a valid file!");
         }
 
 
@@ -89,6 +89,4 @@ public class Zip {
         long totalTime = (endTime - startTime) / 1000;
 
         System.out.println("Compressed, took " + totalTime + " seconds.");}
-
-
 }

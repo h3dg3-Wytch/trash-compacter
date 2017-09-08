@@ -1,8 +1,5 @@
 package kibo;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -14,9 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 /**
  * Unit test for simple App.
  */
@@ -47,7 +45,7 @@ public class AppTest {
     @org.junit.Test
     public void TestThatItWillConvertIntoZip()throws IOException{
         File tempFile = folder.newFile("example.txt");
-        FileUtils.writeStringToFile(tempFile, "Hello, Compression");
+        FileUtils.write(tempFile, "Hello, Compression", "US-ASCII");
         App.main(new String[]{tempFile.toString()});
         assertThat(new File(folder.getRoot() + "/example.zip").exists(),is(true));
     }

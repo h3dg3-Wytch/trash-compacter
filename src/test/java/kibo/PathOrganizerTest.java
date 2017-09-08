@@ -1,6 +1,5 @@
 package kibo;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class PathOrganizerTest {
 
