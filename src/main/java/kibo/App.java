@@ -3,6 +3,7 @@ package kibo;
 import javafx.scene.shape.Path;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
 
@@ -37,9 +38,13 @@ public class App
     }
 
     public static void zipAndUnZipFile(File targetFile){
-        Zip.zipFile(targetFile);
-        String cleanPath = PathOrganizer.cleanPath(targetFile.toString()) + ".zip";
-        Zip.unzipFile(new File(cleanPath));
+        try {
+            Zip.zipFile(targetFile);
+            String cleanPath = PathOrganizer.cleanPath(targetFile.toString()) + ".zip";
+            Zip.unzipFile(new File(cleanPath));
+        }catch (IOException e){
+            System.out.println("ERROR: Please enter a valid file!");
+        }
     }
 
 

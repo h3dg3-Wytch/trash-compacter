@@ -16,7 +16,7 @@ public class Zip {
         return file.length() + " bytes.";
     }
 
-    public static void unzipFile(File file){
+    public static void unzipFile(File file) throws IOException {
         System.out.println("---------------------------------");
         System.out.println("Size of unzipped file : " + Zip.fileSize(file.toString()));
         System.out.println("Starting decompression of " + file.toString() + "...");
@@ -45,7 +45,7 @@ public class Zip {
                 destination.close();
             }
         }catch(Exception e){
-            System.out.println("ERROR: Please enter a valid file!");
+            throw new IOException();
         }
 
         long endTime = System.currentTimeMillis();
@@ -55,15 +55,19 @@ public class Zip {
     }
 
 
-    public static void zipFile(File file){
+    public static void zipFile(File file) throws IOException {
         System.out.println("---------------------------------");
         System.out.println("Size of zipped file : " + Zip.fileSize(file.toString()));
         System.out.println("Starting compression of " + file.toString() + "...");
 
         long startTime = System.currentTimeMillis();
 
+
         try{
 
+            if(!file.exists()){
+                throw new IOException();
+            }
             FileOutputStream fos = new FileOutputStream(PathOrganizer.cleanPath(file.toString()) + ".zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
             ZipEntry ze= new ZipEntry(file.toString());
@@ -81,9 +85,8 @@ public class Zip {
             zos.close();
 
         }catch(IOException ex){
-            System.out.println("ERROR: Please enter a valid file!");
+            throw new IOException();
         }
-
 
         long endTime = System.currentTimeMillis();
         long totalTime = (endTime - startTime) / 1000;

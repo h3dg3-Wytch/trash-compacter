@@ -25,6 +25,10 @@ public class ZipTest {
    @Rule
    public ExpectedException thrown = ExpectedException.none();
 
+   @Test(expected = IOException.class)
+   public void TestThatItCatchesInvalidFile() throws IOException{
+      Zip.zipFile(new File("badfile.file"));
+   }
    @Test
    public void TestCompressionAndDecompression() throws IOException{
       File tempFile = folder.newFile("example.txt");
