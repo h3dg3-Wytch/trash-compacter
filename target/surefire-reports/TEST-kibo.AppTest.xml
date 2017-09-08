@@ -64,7 +64,7 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="TestTooLargeParamaters" classname="kibo.AppTest" time="0.015"/>
+  <testcase name="TestTooLargeParamaters" classname="kibo.AppTest" time="0.014"/>
   <testcase name="TestThatItWillConvertIntoZip" classname="kibo.AppTest" time="0.021"/>
-  <testcase name="TestNoParameters" classname="kibo.AppTest" time="0"/>
+  <testcase name="TestNoParameters" classname="kibo.AppTest" time="0.001"/>
 </testsuite>

@@ -45,7 +45,7 @@ public class Zip {
                 destination.close();
             }
         }catch(Exception e){
-            System.out.println("ERROR: something happened!");
+            System.out.println("ERROR: Please enter a valid file!");
         }
 
         long endTime = System.currentTimeMillis();
