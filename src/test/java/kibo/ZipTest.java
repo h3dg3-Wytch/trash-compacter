@@ -36,7 +36,7 @@ public class ZipTest {
       Zip.zipFile(tempFile);
 
       File zipFile = new File(folder.getRoot()+"/example.zip");
-      assertThat(new File("example.zip").exists(), is(true));
+      assertThat(new File(folder.getRoot()+"/example.zip").exists(), is(true));
 
 
       tempFile.delete();
