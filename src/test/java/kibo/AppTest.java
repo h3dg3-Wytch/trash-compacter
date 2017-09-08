@@ -3,43 +3,59 @@ package kibo;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 /**
  * Unit test for simple App.
  */
-public class AppTest extends TestCase{
+public class AppTest {
 
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
     }
 
     @org.junit.Test
-    public void testParameters(){
-        String[] params = {"example.txt"};
+    public void TestNoParameters(){
+        String[] params = {};
         App.main(params);
-
+        assertEquals("Please provide arguments! You can either enter a filename, or a directory!\n",outContent.toString());
     }
+
+    @org.junit.Test
+    public void TestTooLargeParamaters(){
+     App.main(new String[]{"temp.txt","temp.txt"});
+     assertEquals("Please provide either a file name or directory name!\n", outContent.toString());
+    }
+
+    @org.junit.Test
+    public void TestThatItWillConvertIntoZip()throws IOException{
+        File tempFile = folder.newFile("example.txt");
+        FileUtils.writeStringToFile(tempFile, "Hello, Compression");
+        App.main(new String[]{tempFile.toString()});
+        assertThat(new File(folder.getRoot() + "/example.zip").exists(),is(true));
+    }
+
+    @After
+    public void cleanUpStreams() {
+        System.setOut(null);
+    }
+
 
 }

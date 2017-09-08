@@ -1,5 +1,7 @@
 package kibo;
 
+import javafx.scene.shape.Path;
+
 import java.io.*;
 import java.nio.Buffer;
 import java.util.zip.ZipEntry;
@@ -14,22 +16,21 @@ public class Zip {
         return file.length() + " bytes.";
     }
 
-    public static void unzipFile(String fileName){
+    public static void unzipFile(File file){
 
-        System.out.println("Size of zipped file : " + fileSize(fileName));
-
-        System.out.println("Starting decompression of " + fileName + "...");
+        System.out.println("Size of unzipped file : " + Zip.fileSize(file.toString()));
+        System.out.println("Starting decompression of " + file.toString() + "...");
         long startTime = System.currentTimeMillis();
 
         try{
-            ZipInputStream inputStream = new ZipInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            ZipInputStream inputStream = new ZipInputStream(new BufferedInputStream(new FileInputStream(file)));
             BufferedOutputStream destination = null;
 
             ZipEntry zipEntry = inputStream.getNextEntry();
 
             while (zipEntry != null){
 
-                destination = new BufferedOutputStream(new FileOutputStream(zipEntry.getName() + ".txt"));
+                destination = new BufferedOutputStream(new FileOutputStream(zipEntry.getName() + "(1)"));
 
                 int length;
                 while((length = inputStream.read(BUFFER)) > 0){
@@ -54,37 +55,35 @@ public class Zip {
     }
 
 
-    public static void zipFile(String fileName, String filePath){
+    public static void zipFile(File file){
 
-        System.out.println("Size of zipped file : " + fileSize(fileName));
+        System.out.println("Size of zipped file : " + Zip.fileSize(file.toString()));
+        System.out.println("Starting compression of " + file.toString() + "...");
 
-        System.out.println("Starting compression of " + fileName +"...");
         long startTime = System.currentTimeMillis();
 
-        FileOutputStream destination = null;
-        ZipOutputStream zipOutputStream = null;
-        FileInputStream origin = null;
-
         try{
-            destination = new FileOutputStream(fileName+".zip");
-            zipOutputStream = new ZipOutputStream(new BufferedOutputStream(destination));
-            ZipEntry zipEntry = new ZipEntry(fileName);
-            zipOutputStream.putNextEntry(zipEntry);
-            origin = new FileInputStream(fileName);
 
-            int length;
-            while((length = origin.read(BUFFER)) > 0){
-                zipOutputStream.write(BUFFER, 0, length);
+            FileOutputStream fos = new FileOutputStream(PathOrganizer.cleanPath(file.toString()) + ".zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+            ZipEntry ze= new ZipEntry(file.toString());
+            zos.putNextEntry(ze);
+            FileInputStream in = new FileInputStream(file);
+
+            int len;
+            while ((len = in.read(BUFFER)) > 0) {
+                zos.write(BUFFER, 0, len);
             }
-            //Closing
-            zipOutputStream.close();
-            origin.close();
-        }catch(FileNotFoundException e){
-            System.out.println("Please enter a valid file name!");
-        } catch (IOException e) {
-            System.out.println("Error, something happened!");
-            e.printStackTrace();
+
+            in.close();
+            zos.closeEntry();
+
+            zos.close();
+
+        }catch(IOException ex){
+            ex.printStackTrace();
         }
+
 
         long endTime = System.currentTimeMillis();
         long totalTime = (endTime - startTime) / 1000;
